@@ -19,14 +19,14 @@ jobs:
 
     - name: Make some changes
       run: |
-        echo "Hello, World!" > hello_world.txt
+        echo "Hello, World!" > hello_world2.txt
 
     - name: Commit and push
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m "Add hello_world.txt"
+        git commit -m "Add hello_world2.txt"
         git push
 
     - name: Create Pull Request
