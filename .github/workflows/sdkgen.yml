@@ -11,28 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout target repo
       uses: actions/checkout@v2
+      with:
+        repository: tiagokrebs/sdk
+        token: ${{ secrets.PAT }}
+
+    - name: Make some changes
+      run: |
+        echo "Hello, World!" > hello_world.txt
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git commit -m "Add hello_world.txt"
+        git push
 
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PAT }}
-        push-to-fork: tiagokrebs/sdk
-        branch: create-pr-branch
-        title: Create PR
-        body: |
-          This is an automated PR created from repo1.
-        draft: false
-        labels: automerge
-
-    - name: Checkout target repo
-      uses: actions/checkout@v2
-      with:
-        repository: tiagokrebs/sdk
-        token: ${{ secrets.PAT }}
-        
+        title: "Automated PR"
+        body: "This is an automated PR."
+        labels: "automerge"
+    
     - name: Auto merge
       uses: pascalgn/automerge-action@v0.14.3
       env:
@@ -40,5 +45,5 @@ jobs:
         MERGE_LABELS: "automerge,!wip"
         MERGE_METHOD: "squash"
         MERGE_COMMIT_MESSAGE: "Automatic merge of PR from repo1"
-        MERGE_FORKS: "true"
+        MERGE_FORKS: "false"
         UPDATE_LABELS: ""
