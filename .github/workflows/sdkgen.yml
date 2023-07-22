@@ -26,9 +26,3 @@ jobs:
           body: "This PR updates the data."
           branch: "test"  # The branch to create or update
           base: "main"  # The branch to target with the pull request
-
-      - name: Automatically merge the pull request
-        uses: peter-evans/merge-pull-request@v1
-        with:
-          token: ${{ secrets.PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
