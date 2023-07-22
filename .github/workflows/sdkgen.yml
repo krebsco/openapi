@@ -26,4 +26,4 @@ jobs:
           body: "This PR updates the data."
           branch: "test"  # The branch to create or update
           base: "main"  # The branch to target with the pull request
-          # labels: "automerge"
+          labels: "automerge"
