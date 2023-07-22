@@ -19,14 +19,14 @@ jobs:
 
     - name: Make some changes
       run: |
-        echo "Hello, World!" > hello_world2.txt
+        echo "Hello, World!" > hello_world3.txt
 
     - name: Commit and push
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m "Add hello_world2.txt"
+        git commit -m "Add hello_world3.txt"
         git push
 
     - name: Create Pull Request
@@ -34,16 +34,23 @@ jobs:
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PAT }}
-        title: "Automated PR"
+        commit-message: "Update SDK"
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        branch: new-sdk-version
         body: "This is an automated PR."
+        delete-branch: true
+        title: "Automated PR"
         labels: "automerge"
+        draft: false
     
-    - name: Auto merge
-      uses: pascalgn/automerge-action@v0.14.3
-      env:
-        GITHUB_TOKEN: "${{ secrets.PAT }}"
-        MERGE_LABELS: "automerge,!wip"
-        MERGE_METHOD: "squash"
-        MERGE_COMMIT_MESSAGE: "Automatic merge of PR from repo1"
-        MERGE_FORKS: "false"
-        UPDATE_LABELS: ""
+    # - name: Auto merge
+    #   uses: pascalgn/automerge-action@v0.14.3
+    #   env:
+    #     GITHUB_TOKEN: "${{ secrets.PAT }}"
+    #     MERGE_LABELS: "automerge,!wip"
+    #     MERGE_METHOD: "squash"
+    #     MERGE_COMMIT_MESSAGE: "Automatic merge of PR from repo1"
+    #     MERGE_FORKS: "false"
+    #     UPDATE_LABELS: ""
